@@ -1,0 +1,118 @@
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column; /* Arrange children in a column */
+    align-items: start; /* Center children horizontally */
+    /*background-color: rgb(241, 240, 240);  Optional: background color for visibility */
+    margin-left: 45px;
+    padding: 20px; /* Optional: padding for spacing */
+    border-radius: 8px; /* Optional: rounded corners */
+}
+
+
+.pizza {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    /* background-color: rgb(250, 248, 248); */
+    width: 600px;
+    height: 100px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5); /* Optional: add shadow effect */
+    
+}
+.pizza:hover {
+    background-color: #e0e0e0;
+    /* box-shadow: 10px; Optional: change background color on hover */
+}
+
+.pizza img {
+    width: 50px; /* Adjust size as needed */
+    height: 50px; /* Adjust size as needed */
+    margin-right: 10px;
+    margin-left: 20px;
+}
+.pizza-name {
+    flex-grow: 1;
+    margin-left: 10px; /* Pushes the content to the right */
+}
+h6{
+    margin-top: 0px;
+    margin-bottom: 2px;
+}
+.pizzadescription {
+    font-size: 0.7rem;
+    color: rgb(100, 129, 143);
+    padding: 2px 0px;
+    width: 90%;
+    display: block;
+    margin-left: 10px;
+    margin-bottom: 2px;
+}
+
+p {
+    margin: 0;
+    inline-size: 0.2px;
+}
+.pizza-price {
+    margin-left: 10px;
+    margin-right: 60px; /* Pushes the content to the right */
+}
+
+.pizza-checkbox {
+    margin-left: 10px;
+    margin-right: 20px; /* Pushes the content to the right */
+}
+
+.add-to-cart {
+    margin-left: 195px;
+    background-color: #970C0A; 
+}
+
+.total-price{
+    width: 100%; /* Make the elements occupy the full width */
+    text-align: center; /* Center the text inside the elements */
+    margin: 10px 0; /* Add some margin for spacing */
+    text-align: center;
+    margin-left: 110px;
+  }
+
+
+/* *****************quantity control************ */
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+  }
+  
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+  }
+  
+  span {
+    margin: 0 10px;
+}
+
+.icon-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc; /* Border color */
+     /* Padding inside the box */
+}
+.quantity-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin: 0 5px; /* Space between buttons */
+  }
+  
+.quantity-btn i {
+    font-size: 0.8em; /* Adjust icon size */
+}  

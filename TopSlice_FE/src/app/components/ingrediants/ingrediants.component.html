@@ -1,0 +1,13 @@
+<!-- pizza-popup.component.html -->
+<div class="popup-overlay" (click)="closePopup()">
+    <div class="popup-content" (click)="$event.stopPropagation()">
+      <h2>Pizza Ingredients</h2>
+      <ul>
+        <li *ngFor="let ingredient of ingredients">
+          {{ingredient}}
+        </li>
+      </ul>
+      <button class="close-button" (click)="closePopup()">Close</button>
+    </div>
+  </div>
+  

@@ -1,0 +1,12 @@
+<div class="container">
+    <div class="ingredient" *ngFor = "let ingrediant of ingredients">
+        <img src={{ingrediant.image}} alt="Pepperoni">
+        <div class="ingredient-name">{{ingrediant.tname}}</div>
+        <div class="ingredient-price">${{ingrediant.price}}</div>
+        <input class= "ingrediant-radi" type="checkbox"  [value]="ingrediant" (change)="onCheckboxChange($event, ingrediant)">
+    </div>
+    <div>
+        <p class="total-price">Total Price for the Pizza : ${{totalPrice}}</p>
+        <button class="add-to-cart" (click)="addToCart()">Add to Cart</button>
+    </div>
+</div>

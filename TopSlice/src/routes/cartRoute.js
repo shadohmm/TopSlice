@@ -4,18 +4,19 @@ const CartItem = require('../models/dbModels').CartItem;
 
 const addToCart = async (req,res) =>{
     try {
-        const {userId,pizzaId,pizzaName,pizzaPrice,pizzaImage,pizzaQuantity} = req.body;
+        const {userId,pizzaId,pizzaName,pizzaPrice,pizzaImage,pizzaQuantity,pizzaDescription} = req.body;
         // Check if user with given pizzaId exists
         await CartItem.findOne({ userId, pizzaId })
         .then(async (cartItem) => {
             if (cartItem) {
                 // If user with given pizzaId exists, update the quantity
                 cartItem.pizzaQuantity += pizzaQuantity;
+                cartItem.pizzaPrice +=pizzaPrice;
                 await cartItem.save();
                 res.status(200).json({ message: 'Pizza Quantity has increased successfully' });
             } else {
                 // If user with given pizzaId does not exist, create a new cart item
-                const newCartItem = new CartItem({ userId, pizzaId, pizzaName, pizzaPrice, pizzaImage, pizzaQuantity });
+                const newCartItem = new CartItem({ userId, pizzaId, pizzaName, pizzaPrice, pizzaImage, pizzaQuantity,pizzaDescription });
                 await newCartItem.save();
                 res.status(201).json({ message: 'Pizza added to cart successfully' });
             }
@@ -64,7 +65,7 @@ const updateQuantityOfPizza = async (req,res) => {
 
 const getShopingCart = async (req,res) =>{
     try {
-        const {userId} = req.body;
+        const {userId} = req.params;
         // Check if user with given pizzaId exists
         const cartItems = await CartItem.find({ userId })
         

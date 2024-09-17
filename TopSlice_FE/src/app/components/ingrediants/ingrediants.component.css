@@ -1,0 +1,34 @@
+/* pizza-popup.component.css */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* background: rgba(0, 0, 0, 0.5); */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+    backdrop-filter: blur(0.2px); /* Apply blur effect */
+    -webkit-backdrop-filter: blur(0.2px); /* For Safari */
+    border-radius: 10px; /* Optional: Add rounded corners */
+    padding: 20px; /* Optional: Add padding */
+  }
+  
+  .popup-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 300px;
+    text-align: center;
+  }
+  
+  button {
+    margin-top: 20px;
+  }
+ 
+  .close-button{
+    background-color: #970C0A;
+    color: #fff;
+  }
