@@ -1,0 +1,18 @@
+<!-- src/app/register/register.component.html -->
+<div class="auth-container">
+    <h2>Register</h2>
+    <form (ngSubmit)="register()" #registerForm="ngForm">
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" [(ngModel)]="email" required>
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" [(ngModel)]="password" required>
+      </div>
+      <button type="submit">Register</button>
+      <button (click)="loginPage()">Login</button>
+    </form>
+    <p>{{status}}</p>
+</div>
+  

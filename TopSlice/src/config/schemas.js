@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
 
-const userSchema = new mongoose.Schema({
-    email: String,
-    userName: String,
-    password: String
-});
+// const userSchema = new mongoose.Schema({
+//     email: { type: String, required: true },
+//     password: { type: String, required: true },
+// });
 
 const pizzaSchema = new mongoose.Schema({
     pizzaName: String,
@@ -26,10 +25,11 @@ const cartItem = new mongoose.Schema({
     pizzaPrice: Number,
     pizzaImage: String,
     pizzaQuantity: Number,
+    pizzaDescription: String,
 })
 
 module.exports ={
-    userSchema,
+    // userSchema,
     pizzaSchema,
     ingredientsSchema,
     cartItem

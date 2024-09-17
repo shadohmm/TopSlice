@@ -1,0 +1,54 @@
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column; /* Arrange children in a column */
+    align-items: center; /* Center children horizontally */
+    background-color: #f0f0f0; /* Optional: background color for visibility */
+    padding: 20px; /* Optional: padding for spacing */
+    border-radius: 8px; /* Optional: rounded corners */
+}
+
+
+.ingredient {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    background-color: aqua;
+    width: 500px;
+    height: 70px;
+    
+}
+.ingredient:hover {
+    background-color: #e0e0e0;
+    box-shadow: 10px; /* Optional: change background color on hover */
+}
+
+.ingredient img {
+    width: 50px; /* Adjust size as needed */
+    height: 50px; /* Adjust size as needed */
+    margin-right: 10px;
+    margin-left: 20px;
+}
+.ingredient-name {
+    flex-grow: 1;
+    margin-left: 100px; /* Pushes the content to the right */
+}
+.ingredient-price {
+    margin-left: 10px;
+    margin-right: 80px; /* Pushes the content to the right */
+}
+
+.ingrediant-radi {
+    margin-left: 10px;
+    margin-right: 20px; /* Pushes the content to the right */
+}
+
+.add-to-cart {
+    margin-left: 30px;
+    background-color: #970C0A; 
+}

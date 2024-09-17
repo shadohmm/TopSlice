@@ -1,15 +1,18 @@
-const User = require('../models/dbModels').User;
+const {User} = require('../models/users');
+const jwt = require('jsonwebtoken');
+
+const JWT_SECRET = 'your_jwt_secret'; // Use environment variables for secrets
 
 const register = async (req, res) => {
     try {
-        const { email, userName, password } = req.body;
-        const user = await User.findOne({email,userName});
+        const { email, password } = req.body;
+        const user = await User.findOne({email});
         if(user) {
-            return res.status(400).json({error: 'User already exists'});
+            return res.status(201).json({message: 'User already exists'});
         }else {
-            const newUser = new User({ email, userName, password });
+            const newUser = new User({ email, password });
             await newUser.save();
-            res.status(201).json({ message: 'User added successfully',newUser });
+            res.status(201).json({ message: 'User added successfully' });
         }
     }
     catch (error) {
@@ -20,20 +23,24 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
     try {
-        const {userName, password} = req.body;
+        const {email, password} = req.body;
         // Check if userName and password are present in the database
-        const user = await User.findOne({ userName, password });
-        if (user) {
-            // Login successful
-            res.status(200).json({ message: 'Login successful', user});
-        } else {
+        const user = await User.findOne({ email });
+        console.log("user",user);
+        
+        if (!user || !(await user.comparePassword(password))) {
             // Invalid credentials
             res.status(401).json({ error: 'Invalid credentials' });
+        } else {
+            // Login successful
+            // res.status(200).json({ message: 'Login successful', user});
+            const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '1h' });
+            res.json({ token });
         }
 
     }catch (error) {
         console.error('Error logging in:', error);
-        res.status(500).json({ error: 'Internal server error' });
+        res.status(500).send(error.message);
     }
 };
 
