@@ -1,41 +1,60 @@
 /* src/app/register/register.component.css */
 .auth-container {
-    max-width: 400px;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  }
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  margin-top: 50px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+div {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
   
-  h2 {
-    margin-bottom: 20px;
-  }
-  
-  div {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  input {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-  }
-  
-  button {
-    padding: 10px 15px;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
+.register:hover {
+  background-color: #0056b3;
+}
+
+.login{
+  margin-left: 40px;
+}
+.login-button {
+  background-color: white;
+  color: red;
+  margin-top: 20px;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: underline;
+
+}
+
+
+.register{
+  margin-left: 135px;
+  margin-top: 20px;
+}

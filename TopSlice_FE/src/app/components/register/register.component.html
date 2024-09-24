@@ -10,8 +10,8 @@
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" [(ngModel)]="password" required>
       </div>
-      <button type="submit">Register</button>
-      <button (click)="loginPage()">Login</button>
+      <button class="register" type="submit">Register</button>
+      <p class="login">Already have an Account <button class="login-button" (click)="loginPage()">Login</button></p>
     </form>
     <p>{{status}}</p>
 </div>

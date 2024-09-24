@@ -3,29 +3,36 @@ body {
     font-family: Arial, sans-serif;
     margin: 20px;
 }
-
+/* dddd */
 .container {
     display: flex;
-    flex-direction: column; /* Arrange children in a column */
-    align-items: center; /* Center children horizontally */
-    background-color: #f0f0f0; /* Optional: background color for visibility */
-    padding: 20px; /* Optional: padding for spacing */
-    border-radius: 8px; /* Optional: rounded corners */
+    flex-direction: row; 
+    align-items: start; 
+    margin-left: 45px;
+    padding: 20px; 
+    border-radius: 8px; 
+    border: none;
 }
+
+.card {
+    flex-direction: column;
+}
+
 
 
 .ingredient {
+    
     display: flex;
     align-items: center;
     margin-bottom: 10px;
-    background-color: aqua;
+    /* background-color: rgb(250, 248, 248); */
     width: 500px;
-    height: 70px;
+    height: 80px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Optional: add shadow effect */
     
 }
 .ingredient:hover {
-    background-color: #e0e0e0;
-    box-shadow: 10px; /* Optional: change background color on hover */
+    background-color: #e0e0e0; 
 }
 
 .ingredient img {
@@ -48,7 +55,42 @@ body {
     margin-right: 20px; /* Pushes the content to the right */
 }
 
+.pricing {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    margin-left: 210px;
+    padding: 20px;
+    /* border-radius: 8px; */
+}
+
+.billing{
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: space-between;
+}
+
+.pricing-ingrediant-name{
+    flex: 1;
+    margin-right: 60px;
+    color: rgba(0, 0, 0, 0.4)
+}
+
+.pricing-ingrediant-price{
+    width: 50px;
+    text-align: right;
+    flex: 0;
+    align-items: end;
+    color: rgba(0, 0, 0, 0.4)
+}
+
 .add-to-cart {
-    margin-left: 30px;
+    margin-left: 60px;
     background-color: #970C0A; 
+}
+
+.total-price{
+    margin-left: 50px;
+    margin-right: 60px;
 }

@@ -23,9 +23,11 @@ const cartItem = new mongoose.Schema({
     pizzaId: String,
     pizzaName: String,
     pizzaPrice: Number,
+    totalPizzaPrice: {type: Number, default: 0},
     pizzaImage: String,
     pizzaQuantity: Number,
     pizzaDescription: String,
+    isSelected: { type: Boolean, default: false }
 })
 
 module.exports ={

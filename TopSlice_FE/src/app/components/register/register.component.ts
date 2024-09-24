@@ -16,6 +16,7 @@ export class RegisterComponent {
   register(){
     this.authService.register(this.email, this.password).subscribe({
       next: (data:any) => {
+        console.log("data after registration",data);
         console.log(data.message);
         this.status = data.message;
       },

@@ -18,8 +18,14 @@ export class CartComponent {
   ngOnInit(): void {
     this.routeService.getShopingCartItems('1').subscribe({
       next: (data:any) => {
+        console.log("data", data);
+        const cartItems = data.cartItems;
+        // Store the fetched data in userCartItems and add the selected property
+        this.userCartItems = cartItems.map((item: any) => ({
+          ...item,
+          totalPizzaPrice: item.pizzaPrice * item.pizzaQuantity,
+          selected: item.isSelected ??false})); 
         console.log("data", data.cartItems);
-        this.userCartItems = data.cartItems; // Store the fetched data in userCartItems
         console.log("cartDATA", this.userCartItems);
         
       },
@@ -30,43 +36,105 @@ export class CartComponent {
   }
 
   onCheckboxChange(event: any, cartItem: any) {
-    if (event.target.checked) {
-      this.totalPrice += cartItem.pizzaPrice;
-    } else {
-      this.totalPrice -= cartItem.pizzaPrice;
+    try {
+      cartItem.selected = event.target.checked;
+
+      if (cartItem.selected) {
+        this.totalPrice += cartItem.totalPizzaPrice;
+      } else {
+        this.totalPrice -= cartItem.totalPizzaPrice;
+      }
+
+      
+    } catch (error) {
+      console.error('Error updating cart item:', error);
+      
     }
+    // if (event.target.checked) {
+    //   this.totalPrice += cartItem.pizzaPrice;
+    // } else {
+    //   this.totalPrice -= cartItem.pizzaPrice;
+    // }
   }
 
   //for increasing adn decreasing hte queantity etter to remove the  selection check ox and 
   //jsut let the incr/dec along with delete option 
   
   increaseQuantity(cartItem: any): void {
-    cartItem.pizzaQuantity++;
-    cartItem.pizzaPrice = cartItem.pizzaPrice / (cartItem.pizzaQuantity - 1) * cartItem.pizzaQuantity;
-  }
-
-  decrementQuantity(cartItem: any): void {
-    if (cartItem.pizzaQuantity > 1) {
-      cartItem.pizzaQuantity--;
-      cartItem.pizzaPrice = cartItem.pizzaPrice / (cartItem.pizzaQuantity + 1) * cartItem.pizzaQuantity;
+    // cartItem.pizzaQuantity++;
+    // cartItem.pizzaPrice = cartItem.pizzaPrice / (cartItem.pizzaQuantity - 1) * cartItem.pizzaQuantity;
+    // this.totalPrice = cartItem.pizzaPrice;
+    try {
+      cartItem.pizzaQuantity++;
+      cartItem.totalPizzaPrice += cartItem.pizzaPrice;
+      if (cartItem.selected) {
+        this.totalPrice += cartItem.pizzaPrice;
+      }
+      
+    } catch (error) {
+      console.error('Error updating cart item:', error);
     }
   }
 
-  deleteItem(userId:String,pizzaId :String) {
+  decrementQuantity(cartItem: any): void {
+    // if (cartItem.pizzaQuantity > 1) {
+    //   cartItem.pizzaQuantity--;
+    //   cartItem.pizzaPrice = cartItem.pizzaPrice / (cartItem.pizzaQuantity + 1) * cartItem.pizzaQuantity;
+    //   // this.totalPrice -= cartItem.pizzaPrice;
+    // }
+
+    try {
+      if (cartItem.pizzaQuantity > 1) {
+        cartItem.pizzaQuantity--;
+        cartItem.totalPizzaPrice -= cartItem.pizzaPrice;
+        if (cartItem.selected) {
+          this.totalPrice -= cartItem.pizzaPrice;
+        }
+      }
+      
+    } catch (error) {
+      console.error('Error updating cart item:', error);
+      
+    }
+  }
+
+  deleteItem(userId:String,cardItem:CartItem) {
+    const pizzaId = cardItem.pizzaId;
+    // const pizzaPrice:number = cardItem.pizzaPrice;
+    // const cartData = { userId, pizzaId };
+    // this.routeService.removeCartItem(cartData).subscribe({  
+    //   next: (data) => {
+    //     console.log("item removed", data);
+    //     this.userCartItems = this.userCartItems.filter((item) => item.pizzaId !== pizzaId);
+    //     this.totalPrice -= pizzaPrice; 
+    //   }
+    // });
+    // console.log("delete item");
     const cartData = { userId, pizzaId };
-    this.routeService.removeCartItem(cartData).subscribe({  
+    this.routeService.removeCartItem(cartData).subscribe({
       next: (data) => {
         console.log("item removed", data);
+        // Remove the item from the local array
+        this.userCartItems = this.userCartItems.filter(item => item.pizzaId !== pizzaId);
+        // Recalculate the total price
+        this.calculateTotalPrice(cardItem.totalPizzaPrice);
+      },
+      error: (err) => {
+        console.error('Error deleting item:', err);
       }
     });
     console.log("delete item");
+
   }
- 
+  
   placeOrder(){
     console.log(this.totalPrice);
     this.routeService.getPizza().subscribe((data)=>{
       console.log(data);
     });
+  }
+  calculateTotalPrice(price:any): void {
+    this.totalPrice -= price;
   }
 
 }

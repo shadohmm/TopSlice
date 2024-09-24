@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Route, Router } from '@angular/router';
+// import jwt_decode from "jwt-decode";
 
 @Component({
   selector: 'app-login',
@@ -27,9 +28,7 @@ export class LoginComponent {
   }
 
   registerPage() : void {
-
     this.router.navigate(['/register']);
-
   }
 
 }

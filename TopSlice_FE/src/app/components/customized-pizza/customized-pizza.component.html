@@ -1,12 +1,22 @@
 <div class="container">
-    <div class="ingredient" *ngFor = "let ingrediant of ingredients">
-        <img src={{ingrediant.image}} alt="Pepperoni">
-        <div class="ingredient-name">{{ingrediant.tname}}</div>
-        <div class="ingredient-price">${{ingrediant.price}}</div>
-        <input class= "ingrediant-radi" type="checkbox"  [value]="ingrediant" (change)="onCheckboxChange($event, ingrediant)">
+    <div class="card">
+        <div class="ingredient" *ngFor="let ingrediant of ingredients">
+            <img src={{ingrediant.image}} alt="Pepperoni">
+            <div class="ingredient-name">{{ingrediant.tname}}</div>
+            <div class="ingredient-price">${{ingrediant.price}}</div>
+            <input class= "ingrediant-radi" type="checkbox"  [value]="ingrediant" (change)="onCheckboxChange($event, ingrediant)">
+        </div>
     </div>
-    <div>
-        <p class="total-price">Total Price for the Pizza : ${{totalPrice}}</p>
-        <button class="add-to-cart" (click)="addToCart()">Add to Cart</button>
+    <div class="pricing">
+        <div>
+            <div class="billing" *ngFor = "let ingrediant of selectedIngredients">
+                <p class="pricing-ingrediant-name">{{ingrediant.tname}}</p>
+                <p class="pricing-ingrediant-price">${{ingrediant.price}}</p>
+            </div>
+            <label for="name">Name your Pizza:</label>
+            <input type="text" id="name" [(ngModel)]="customPizzaName" name="name" required>
+            <p class="total-price">Total Price : ${{totalPrice}}</p>
+            <button class="add-to-cart" (click)="addToCart()">Add to Cart</button>
+        </div>
     </div>
 </div>
