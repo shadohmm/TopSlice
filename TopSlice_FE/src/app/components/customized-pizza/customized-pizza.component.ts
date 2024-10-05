@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
+import { CartItem } from 'src/app/models/cartItem';
+import { CustomPizza } from 'src/app/models/constants';
+import { Pizza } from 'src/app/models/pizza';
+import { AuthService } from 'src/app/services/auth.service';
 import { IngredientsService } from 'src/app/services/ingredients.service';
 import { RoutesService } from 'src/app/services/routes.service';
+
 
 @Component({
   selector: 'app-customized-pizza',
@@ -10,8 +15,9 @@ import { RoutesService } from 'src/app/services/routes.service';
 export class CustomizedPizzaComponent {
   ingredients:any;
   selectedIngredient = false;
-
-  constructor(private ingredieantService:IngredientsService, private routeService : RoutesService) {
+  customPizzaName:string = ''
+  userId = localStorage.getItem('userId');
+  constructor(private authService: AuthService,private ingredieantService:IngredientsService, private routeService : RoutesService) {
     // this.ingredients = this.ingredieantService.getIngredients();
     // console.log(this.ingredients);
     this.routeService.getIngredients().subscribe((data)=>{
@@ -38,9 +44,43 @@ export class CustomizedPizzaComponent {
     }
   }
 
+
+  
   addToCart(){
+    console.log("selected",this.selectedIngredients);
     console.log(this.totalPrice);
-  }
+    let cartItem : CartItem;
+    const random = Math.floor(Math.random() * 1000);
+    console.log("----------",random);
+    // const userId = this.authService.getUserId();
+    if(!this.userId){
+      alert('Please login to add pizza to cart');
+      return;
+    }
+    cartItem = {
+      userId: this.userId,
+      pizzaId: random.toString(),
+      pizzaName: this.customPizzaName || CustomPizza.pizzaName,
+      pizzaPrice: this.totalPrice,
+      pizzaImage: CustomPizza.pizzaImage,
+      pizzaQuantity: 1,
+      pizzaDescription: CustomPizza.pizzaDescription
+    }
+    console.log("add to cart",cartItem);
+    // pizza.pizzaQuantity = 1;
+    // pizza.userId = 1;
+     this.routeService.addToCart(cartItem).subscribe({
+      next: (data) =>{
+        console.log(data);
+        alert('Pizza added to cart');
+      },
+      error: (error) =>{
+        console.log("error in adding the pizza",error);
+        alert('Error in adding the pizza');
+      }
+  
+     });
+   }
   
 
 }

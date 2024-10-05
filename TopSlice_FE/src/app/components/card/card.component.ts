@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CartItem } from 'src/app/models/cartItem';
 import { Pizza } from 'src/app/models/pizza';
+import { AuthService } from 'src/app/services/auth.service';
 import { PizzaService } from 'src/app/services/pizza.service';
 import { RoutesService } from 'src/app/services/routes.service';
 
@@ -16,7 +17,7 @@ export class CardComponent {
   pizzaIngre : string[] = [];
   ingrediants : string[] = [];
   
-constructor(private routeService:RoutesService) {
+constructor(private authService:AuthService,private routeService:RoutesService) {
   this.routeService.getPizza().subscribe((data)=>{
     this.Pizzas = data;
     console.log(data);
@@ -30,8 +31,15 @@ constructor(private routeService:RoutesService) {
 
  addTOCart(pizza:Pizza){
   let cartItem : CartItem;
+  const userId = localStorage.getItem('userId');
+  if(!userId){
+    alert('Please login to add pizza to cart');
+    return;
+  }
+  // const userId = this.authService.getUserId();
+  console.log("userId",userId);
   cartItem = {
-    userId: '1',
+    userId: userId,
     pizzaId: pizza.id.toString(),
     pizzaName: pizza.name,
     pizzaPrice: pizza.price,

@@ -4,15 +4,15 @@
     <form (ngSubmit)="login()" #loginForm="ngForm">
       <div>
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" [(ngModel)]="email" required>
+        <input type="email" id="email" name="email" [(ngModel)]="email" #emailInput="ngModel"  required [ngClass]="{'is-invalid': emailInput.invalid && emailInput.touched}">
       </div>
       <div>
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password" [(ngModel)]="password" required>
+        <input type="password" id="password" name="password" [(ngModel)]="password" #passwordInput="ngModel" required [ngClass]="{'is-invalid': passwordInput.invalid && passwordInput.touched}">
       </div>
-      <button type="submit">Login</button>
-      <button (click)="registerPage()">register</button>
+      <button class="login" type="submit" [disabled]="loginForm.invalid">Login</button>
+      <p class="register">If you don't have an account <button class = "register-button" (click)="registerPage()">register</button></p>
     </form>
-    <p>{{status}}</p>
+    <p class="status">{{status}}</p>
 </div>
   

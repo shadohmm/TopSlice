@@ -11,6 +11,7 @@ import { environment } from 'src/enviroments/environment';
 export class AuthService {
   private apiUrl = environment.gateway; // Your backend URL
   private tokenSubject = new BehaviorSubject<string | null>(null);
+  private userId: string = '';
 
   constructor(private http: HttpClient) {}
 
@@ -34,10 +35,26 @@ export class AuthService {
   logout() {
     localStorage.removeItem('token');
     this.tokenSubject.next(null);
+    localStorage.removeItem('userId');
   }
 
   isAuthenticated() {
     return !!localStorage.getItem('token');
   }
+
+  setUserId(user_id: string) {
+    console.log('setting user id', user_id);
+    this.userId = user_id;
+  }
+
+  getUserId() {
+    console.log('getting user id', this.userId);
+    return this.userId;
+  }
+
+  // logout(): void {
+  //   localStorage.removeItem('userId'); // Clear userId from localStorage
+  //   this.router.navigate(['/login']); // Navigate to the login page
+  // }
 }
 

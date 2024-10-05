@@ -1,11 +1,11 @@
 <div class="container">
-    <div class="pizza" *ngFor = "let cartItem of userCartItems">
+    <div class="pizza" *ngFor="let cartItem of userCartItems">
         <img src={{cartItem.pizzaImage}} alt="Pepperoni">
         <div class="pizza-details">
             <h6 class="pizza-name">{{cartItem.pizzaName}}</h6>
             <p class="pizzadescription">{{cartItem.pizzaDescription}}</p>
         </div>
-        <div class="pizza-price">${{cartItem.pizzaPrice}}</div>
+        <div class="pizza-price">${{cartItem.totalPizzaPrice}}</div>
         <input class= "pizza-checkbox" type="checkbox"  [value]="cartItem" (change)="onCheckboxChange($event, cartItem)">
         <div class="quantity-controls">
             <div class="icon-container">
@@ -15,7 +15,7 @@
                 <button class="quantity-btn" (click)="decrementQuantity(cartItem)" *ngIf="cartItem.pizzaQuantity > 1">
                     <i class="bi bi-dash-square"></i>
                 </button>
-                <button class="quantity-btn" (click)="deleteItem(cartItem.userId,cartItem.pizzaId)" *ngIf="cartItem.pizzaQuantity === 1">
+                <button class="quantity-btn" (click)="deleteItem(cartItem.userId,cartItem)" *ngIf="cartItem.pizzaQuantity === 1">
                     <i class="bi bi-trash"></i>
                 </button>
                 

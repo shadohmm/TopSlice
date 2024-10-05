@@ -5,12 +5,13 @@ const JWT_SECRET = 'your_jwt_secret'; // Use environment variables for secrets
 
 const register = async (req, res) => {
     try {
+        const userId = Math.floor(Math.random() * 1000000);
         const { email, password } = req.body;
         const user = await User.findOne({email});
         if(user) {
             return res.status(201).json({message: 'User already exists'});
         }else {
-            const newUser = new User({ email, password });
+            const newUser = new User({ email, password, userId });
             await newUser.save();
             res.status(201).json({ message: 'User added successfully' });
         }
@@ -34,7 +35,9 @@ const login = async (req, res) => {
         } else {
             // Login successful
             // res.status(200).json({ message: 'Login successful', user});
-            const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '1h' });
+            console.log("useriddd", user.userId);
+            const token = jwt.sign({ userId: user.userId }, JWT_SECRET, { expiresIn: '1h' });
+            console.log("token",token);
             res.json({ token });
         }
 
