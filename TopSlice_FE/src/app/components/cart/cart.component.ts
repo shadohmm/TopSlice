@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CartItem } from 'src/app/models/cartItem';
+import { AuthService } from 'src/app/services/auth.service';
 import { IngredientsService } from 'src/app/services/ingredients.service';
 import { RoutesService } from 'src/app/services/routes.service';
 
@@ -13,26 +14,34 @@ export class CartComponent {
 //for now we are using the ingrediants, in real we will use the api from BE to get the cart items
   userCartItems:CartItem[] = [];
   totalPrice:number = 0;
-  constructor(private routeService : RoutesService) { }
+
+  constructor(private authService: AuthService,private routeService : RoutesService) { }
 
   ngOnInit(): void {
-    this.routeService.getShopingCartItems('1').subscribe({
-      next: (data:any) => {
-        console.log("data", data);
-        const cartItems = data.cartItems;
-        // Store the fetched data in userCartItems and add the selected property
-        this.userCartItems = cartItems.map((item: any) => ({
-          ...item,
-          totalPizzaPrice: item.pizzaPrice * item.pizzaQuantity,
-          selected: item.isSelected ??false})); 
-        console.log("data", data.cartItems);
-        console.log("cartDATA", this.userCartItems);
-        
-      },
-      error: (err) => {
-        console.error('Error fetching cart items:', err);
-      }
-    });
+    // const userId = this.authService.getUserId();
+    const userId = localStorage.getItem('userId');
+    console.log("userId cart",userId);
+    if (userId) {
+      this.routeService.getShopingCartItems(userId).subscribe({
+        next: (data:any) => {
+          console.log("data", data);
+          const cartItems = data.cartItems;
+          // Store the fetched data in userCartItems and add the selected property
+          this.userCartItems = cartItems.map((item: any) => ({
+            ...item,
+            totalPizzaPrice: item.pizzaPrice * item.pizzaQuantity,
+            selected: item.isSelected ??false})); 
+          console.log("data", data.cartItems);
+          console.log("cartDATA", this.userCartItems);
+          
+        },
+        error: (err) => {
+          console.error('Error fetching cart items:', err);
+        }
+      });
+    }else {
+      console.log('User ID not found in localstorage');
+    }
   }
 
   onCheckboxChange(event: any, cartItem: any) {

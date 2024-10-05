@@ -58,3 +58,19 @@ button {
   margin-left: 135px;
   margin-top: 20px;
 }
+
+.status {
+  margin-left: 40px;
+}
+
+.is-invalid {
+  border: 2px solid red;
+}
+
+.status-success {
+  color: green;
+}
+
+.status-error {
+  color: red;
+}

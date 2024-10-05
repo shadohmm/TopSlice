@@ -32,6 +32,7 @@ export class RoutesService {
   }
 
   getShopingCartItems(userId: any){
+    console.log("userId routes",userId);
     return this.http.get(`${environment.gateway}/getShopingCartItems/${userId}`);
   }
 

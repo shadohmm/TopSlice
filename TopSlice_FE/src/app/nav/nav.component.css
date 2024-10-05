@@ -21,7 +21,9 @@
     transition: all 0.2s ease-in-out; 
     line-height: 24px;
 }
-
+.container{
+  background-color: #970C0A;
+}
 .toolbar {
     position: absolute;
     top: 0;

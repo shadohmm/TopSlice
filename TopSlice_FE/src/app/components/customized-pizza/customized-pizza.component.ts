@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CartItem } from 'src/app/models/cartItem';
 import { CustomPizza } from 'src/app/models/constants';
 import { Pizza } from 'src/app/models/pizza';
+import { AuthService } from 'src/app/services/auth.service';
 import { IngredientsService } from 'src/app/services/ingredients.service';
 import { RoutesService } from 'src/app/services/routes.service';
 
@@ -15,7 +16,8 @@ export class CustomizedPizzaComponent {
   ingredients:any;
   selectedIngredient = false;
   customPizzaName:string = ''
-  constructor(private ingredieantService:IngredientsService, private routeService : RoutesService) {
+  userId = localStorage.getItem('userId');
+  constructor(private authService: AuthService,private ingredieantService:IngredientsService, private routeService : RoutesService) {
     // this.ingredients = this.ingredieantService.getIngredients();
     // console.log(this.ingredients);
     this.routeService.getIngredients().subscribe((data)=>{
@@ -48,10 +50,16 @@ export class CustomizedPizzaComponent {
     console.log("selected",this.selectedIngredients);
     console.log(this.totalPrice);
     let cartItem : CartItem;
-    const date = new Date().toString();
+    const random = Math.floor(Math.random() * 1000);
+    console.log("----------",random);
+    // const userId = this.authService.getUserId();
+    if(!this.userId){
+      alert('Please login to add pizza to cart');
+      return;
+    }
     cartItem = {
-      userId: '1',
-      pizzaId: date.slice(-4),
+      userId: this.userId,
+      pizzaId: random.toString(),
       pizzaName: this.customPizzaName || CustomPizza.pizzaName,
       pizzaPrice: this.totalPrice,
       pizzaImage: CustomPizza.pizzaImage,
