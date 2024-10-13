@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { CartItem } from 'src/app/models/cartItem';
 import { AuthService } from 'src/app/services/auth.service';
 import { IngredientsService } from 'src/app/services/ingredients.service';
@@ -15,7 +16,7 @@ export class CartComponent {
   userCartItems:CartItem[] = [];
   totalPrice:number = 0;
 
-  constructor(private authService: AuthService,private routeService : RoutesService) { }
+  constructor(private authService: AuthService,private routeService : RoutesService, private router: Router) { }
 
   ngOnInit(): void {
     // const userId = this.authService.getUserId();
@@ -136,14 +137,15 @@ export class CartComponent {
 
   }
   
-  placeOrder(){
-    console.log(this.totalPrice);
-    this.routeService.getPizza().subscribe((data)=>{
-      console.log(data);
-    });
-  }
   calculateTotalPrice(price:any): void {
     this.totalPrice -= price;
+  }
+  placeOrder(){
+    // console.log(this.totalPrice);
+    // this.routeService.getPizza().subscribe((data)=>{
+    //   console.log(data);
+    // });
+    this.router.navigate(['/checkout']);
   }
 
 }

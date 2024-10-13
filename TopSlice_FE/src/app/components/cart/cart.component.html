@@ -1,36 +1,31 @@
-<div class="container">
-    <div class="pizza" *ngFor="let cartItem of userCartItems">
+<div class="flex-container">
+    <div class="pizza-container">
+      <div class="pizza" *ngFor="let cartItem of userCartItems">
         <img src={{cartItem.pizzaImage}} alt="Pepperoni">
         <div class="pizza-details">
-            <h6 class="pizza-name">{{cartItem.pizzaName}}</h6>
-            <p class="pizzadescription">{{cartItem.pizzaDescription}}</p>
+          <h6 class="pizza-name">{{cartItem.pizzaName}}</h6>
+          <p class="pizzadescription">{{cartItem.pizzaDescription}}</p>
         </div>
         <div class="pizza-price">${{cartItem.totalPizzaPrice}}</div>
-        <input class= "pizza-checkbox" type="checkbox"  [value]="cartItem" (change)="onCheckboxChange($event, cartItem)">
+        <input class="pizza-checkbox" type="checkbox" [value]="cartItem" (change)="onCheckboxChange($event, cartItem)">
         <div class="quantity-controls">
-            <div class="icon-container">
-                <!-- <button class="quantity-btn" (click)="decreaseQuantity(cartItem)">-</button>
-                <span class="quantity">{{cartItem.pizzaQuantity}}</span>
-                <button class="quantity-btn" (click)="increaseQuantity(cartItem)">+</button> -->
-                <button class="quantity-btn" (click)="decrementQuantity(cartItem)" *ngIf="cartItem.pizzaQuantity > 1">
-                    <i class="bi bi-dash-square"></i>
-                </button>
-                <button class="quantity-btn" (click)="deleteItem(cartItem.userId,cartItem)" *ngIf="cartItem.pizzaQuantity === 1">
-                    <i class="bi bi-trash"></i>
-                </button>
-                
-                <!-- Quantity Display -->
-                <span>{{ cartItem.pizzaQuantity }}</span>
-                
-                <!-- Plus Button -->
-                <button class="quantity-btn" (click)="increaseQuantity(cartItem)">
-                    <i class="bi bi-plus-square"></i>
-                </button>
-            </div>
+          <div class="icon-container">
+            <button class="quantity-btn" (click)="decrementQuantity(cartItem)" *ngIf="cartItem.pizzaQuantity > 1">
+              <i class="bi bi-dash-square"></i>
+            </button>
+            <button class="quantity-btn" (click)="deleteItem(cartItem.userId,cartItem)" *ngIf="cartItem.pizzaQuantity === 1">
+              <i class="bi bi-trash"></i>
+            </button>
+            <span>{{ cartItem.pizzaQuantity }}</span>
+            <button class="quantity-btn" (click)="increaseQuantity(cartItem)">
+              <i class="bi bi-plus-square"></i>
+            </button>
+          </div>
         </div>
+      </div>
     </div>
-    <div>
-        <p class="total-price">Total Price for the Pizza : ${{totalPrice}}</p>
-        <button class="add-to-cart" (click)="placeOrder()">Order Now</button>
+    <div class="Pricing">
+      <p class="total-price">Total Price for the Pizza : ${{totalPrice}}</p>
+      <button class="add-to-cart" (click)="placeOrder()">Order Now</button>
     </div>
-<div>
+  </div>

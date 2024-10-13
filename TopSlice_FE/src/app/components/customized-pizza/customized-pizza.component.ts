@@ -47,6 +47,10 @@ export class CustomizedPizzaComponent {
 
   
   addToCart(){
+    if(this.selectedIngredients.length === 0){
+      alert('Please select ingredients');
+      return;
+    }
     console.log("selected",this.selectedIngredients);
     console.log(this.totalPrice);
     let cartItem : CartItem;
@@ -80,6 +84,9 @@ export class CustomizedPizzaComponent {
       }
   
      });
+    this.totalPrice = 0;
+    this.selectedIngredients = [];
+    this.customPizzaName = '';
    }
   
 

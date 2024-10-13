@@ -31,13 +31,13 @@ input {
 button {
   padding: 10px 15px;
   border: none;
-  background-color: #007bff;
+  background-color: #970C0A;
   color: white;
   cursor: pointer;
 }
 
 .login:hover {
-  background-color: #0056b3;
+  background-color: #961d1a;
 }
 
 .register{
@@ -45,7 +45,7 @@ button {
 }
 .register-button {
   background-color: white;
-  color: red;
+  color: #970C0A;
   margin-top: 20px;
   text-align: center;
   cursor: pointer;

@@ -11,9 +11,10 @@ import { CustomizedPizzaComponent } from './components/customized-pizza/customiz
 import { CartComponent } from './components/cart/cart.component';
 import { ErrorComponent } from './components/error/error.component';
 import { IngrediantsComponent } from './components/ingrediants/ingrediants.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 @NgModule({
   declarations: [
@@ -27,12 +28,14 @@ import { RegisterComponent } from './components/register/register.component';
     IngrediantsComponent,
     LoginComponent,
     RegisterComponent,
+    CheckoutComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
