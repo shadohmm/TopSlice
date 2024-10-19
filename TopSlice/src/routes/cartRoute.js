@@ -1,6 +1,7 @@
 const { cartItem } = require('../config/schemas');
 
 const CartItem = require('../models/dbModels').CartItem;
+const CheckoutDetails = require('../models/dbModels').CheckoutDetails;
 
 const addToCart = async (req,res) =>{
     try {
@@ -98,9 +99,59 @@ const removePizzaFromCart = async (req,res) =>{
     }
 }
 
+const checkoutDetails = async (req,res) =>{
+    try {
+        const {userId,name,address,city,state,zip,phone} = req.body;
+        await CheckoutDetails.findOne({ userId})
+        .then(async (details) => {
+            if (details) {
+                // If user with given pizzaId exists, update the quantity
+                details.name = name;
+                details.address = address;
+                details.city = city;
+                details.state = state;
+                details.zip = zip;
+                details.phone = phone;
+                await details.save();
+                res.status(200).json({ message: 'Delivery address details are updated' });
+            } else {
+                // If user with given pizzaId does not exist, create a new cart item
+                const newCheckoutDetails = new CheckoutDetails({ userId, name, address, city, state, zipCode, phoneNumber });
+                await newCheckoutDetails.save();
+                res.status(201).json({ message: 'Delivery address details are recorded' });
+            }
+        })
+        // Check if user with given pizzaId exists
+        const newCheckoutDetails = new CheckoutDetails({ userId, name, address, city, state, zipCode, phoneNumber });
+        await newCheckoutDetails.save();
+        res.status(201).json({ message: 'Checkout details added successfully' });
+    }catch (error) {
+        console.error('Error adding checkout details:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+}
+
+const getCheckoutDetails = async (req,res) =>{
+    try {
+        const {userId} = req.params;
+        // Check if user with given pizzaId exists
+        const checkoutDetails = await CheckoutDetails.findOne({ userId})
+        if (checkoutDetails) {
+            res.status(200).json({ checkoutDetails });
+        } else {
+            res.status(200).json({ checkoutDetails: null });
+        }
+    }catch (error) {
+        console.error('Error fetching checkout details:', error);
+        res.status(500).json({ error: 'Internal server error while getching the checkout details' });
+    }
+}
+
 module.exports ={
     addToCart,
     updateQuantityOfPizza,
     getShopingCart,
-    removePizzaFromCart
+    removePizzaFromCart,
+    checkoutDetails,
+    getCheckoutDetails
 };
