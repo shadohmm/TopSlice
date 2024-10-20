@@ -37,7 +37,7 @@ export class CartComponent {
           
         },
         error: (err) => {
-          console.error('Error fetching cart items:', err);
+          console.error('Error while fetching cart items:', err);
         }
       });
     }else {

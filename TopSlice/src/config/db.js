@@ -5,7 +5,7 @@ const dbName = 'TopSlice';
 var db;
 async function client(){
    // Connect to MongoDB
-    mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+    mongoose.connect(url)
     .then(() => {
         console.log('Connected to MongoDB');
     })
