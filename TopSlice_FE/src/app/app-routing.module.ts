@@ -8,6 +8,7 @@ import { ErrorComponent } from './components/error/error.component';
 import { AuthGuard } from './auth.guard';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: 'card', component:CardComponent,canActivate: [AuthGuard]},
   {path: 'cart', component:CartComponent, canActivate: [AuthGuard]},
   {path: 'build-pizza', component:CustomizedPizzaComponent, canActivate: [AuthGuard]},
+  {path: 'checkout', component:CheckoutComponent, canActivate: [AuthGuard]},
   {path: '**', component:ErrorComponent}
 ];
 

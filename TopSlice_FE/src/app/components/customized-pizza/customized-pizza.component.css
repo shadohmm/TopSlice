@@ -10,13 +10,11 @@ body {
     align-items: start; 
     margin-left: 45px;
     padding: 20px; 
-    border-radius: 8px; 
-    border: none;
 }
 
-.card {
+/* .card {
     flex-direction: column;
-}
+} */
 
 
 
@@ -26,9 +24,9 @@ body {
     align-items: center;
     margin-bottom: 10px;
     /* background-color: rgb(250, 248, 248); */
-    width: 500px;
-    height: 80px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Optional: add shadow effect */
+    width: 650px;
+    height: 100px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5); /* Optional: add shadow effect */
     
 }
 .ingredient:hover {
@@ -86,11 +84,15 @@ body {
 }
 
 .add-to-cart {
-    margin-left: 60px;
+    margin-left: 90px;
     background-color: #970C0A; 
+    border: 2px solid black;
 }
 
 .total-price{
-    margin-left: 50px;
+    margin-left: 90px;
     margin-right: 60px;
+}
+.custonm-name{
+    margin-left:5px
 }

@@ -30,9 +30,19 @@ const cartItem = new mongoose.Schema({
     isSelected: { type: Boolean, default: false }
 })
 
+const checkoutDetails = new mongoose.Schema({
+    userId: String,
+    name: String,
+    address: String,
+    city: String,
+    state: String,
+    zip:Number,
+    phone: Number
+})
 module.exports ={
     // userSchema,
     pizzaSchema,
     ingredientsSchema,
-    cartItem
+    cartItem,
+    checkoutDetails
 };

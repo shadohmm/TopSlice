@@ -20,4 +20,7 @@ router.post('/updateCartItem', auth, cartRoute.updateQuantityOfPizza);
 router.get('/getShopingCartItems/:userId',cartRoute.getShopingCart);
 router.post('/removeCartItem',cartRoute.removePizzaFromCart);
 
+router.post('/checkoutDetails',cartRoute.checkoutDetails);
+router.get('/getCheckoutDetails/:userId',cartRoute.getCheckoutDetails);
+
 module.exports = router;

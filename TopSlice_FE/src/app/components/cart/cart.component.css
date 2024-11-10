@@ -1,4 +1,3 @@
-
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
@@ -14,17 +13,39 @@ body {
     border-radius: 8px; /* Optional: rounded corners */
 }
 
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: start; /* Align items to the start of the container */
+    padding: 20px;
+    border-radius: 8px;
+    margin-left: 45px;
+
+}
+
+.pizza-container {
+    flex: 0 0 60%;
+}
+
+.Pricing {
+    flex: 0 0 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
 .pizza {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
     /* background-color: rgb(250, 248, 248); */
-    width: 600px;
+    width: 650px;
     height: 100px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5); /* Optional: add shadow effect */
-    
+    flex: 0 0 auto; /* Prevents the element from shrinking */
 }
+
 .pizza:hover {
     background-color: #e0e0e0;
     /* box-shadow: 10px; Optional: change background color on hover */
@@ -36,14 +57,17 @@ body {
     margin-right: 10px;
     margin-left: 20px;
 }
+
 .pizza-name {
     flex-grow: 1;
     margin-left: 10px; /* Pushes the content to the right */
 }
-h6{
+
+h6 {
     margin-top: 0px;
     margin-bottom: 2px;
 }
+
 .pizzadescription {
     font-size: 0.7rem;
     color: rgb(100, 129, 143);
@@ -58,6 +82,7 @@ p {
     margin: 0;
     inline-size: 0.2px;
 }
+
 .pizza-price {
     margin-left: 10px;
     margin-right: 60px; /* Pushes the content to the right */
@@ -69,34 +94,33 @@ p {
 }
 
 .add-to-cart {
-    margin-left: 195px;
+    margin-left: 135px;
     background-color: #970C0A; 
 }
 
-.total-price{
+.total-price {
     width: 100%; /* Make the elements occupy the full width */
     text-align: center; /* Center the text inside the elements */
     margin: 10px 0; /* Add some margin for spacing */
     text-align: center;
     margin-left: 110px;
-  }
-
+}
 
 /* *****************quantity control************ */
 .quantity-controls {
     display: flex;
     align-items: center;
     margin-right: 20px;
-  }
-  
-  button {
+}
+
+button {
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 1.5rem;
-  }
-  
-  span {
+    border: 2px solid black;
+}
+
+span {
     margin: 0 10px;
 }
 
@@ -104,15 +128,37 @@ p {
     display: flex;
     align-items: center;
     border: 1px solid #ccc; /* Border color */
-     /* Padding inside the box */
+    /* Padding inside the box */
 }
+
 .quantity-btn {
     background: none;
     border: none;
     cursor: pointer;
     margin: 0 5px; /* Space between buttons */
-  }
-  
+}
+
 .quantity-btn i {
     font-size: 0.8em; /* Adjust icon size */
-}  
+}
+
+.cart-empty-message {
+    width: 100%;              /* Take up the full width of the screen */
+    height: 100vh;            /* Make it take the full height of the viewport */
+    display: flex;            /* Use flexbox to center the content */
+    justify-content: center;  /* Center horizontally */
+    align-items: center;      /* Center vertically */
+    text-align: top;       /* Ensure text is centered */
+    position: absolute;       /* Make sure it floats above the rest of the content */
+    top: 70px;                   /* Align it to the top */
+    left: 0;                  /* Align it to the left */
+    background-color: rgba(255, 255, 255, 0.7);  /* Optional: add semi-transparent background */
+    z-index: 1000;            /* Ensure it appears above other elements */
+}
+
+.cart-empty-message h1 {
+    font-size: 2rem;          /* Adjust the size of the message */
+    color: #333;              /* Choose a suitable text color */
+    margin: 0;                /* Remove default margin */
+    padding: 0;               /* Remove padding if needed */
+}

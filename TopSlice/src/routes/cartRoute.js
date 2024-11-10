@@ -1,6 +1,7 @@
 const { cartItem } = require('../config/schemas');
 
 const CartItem = require('../models/dbModels').CartItem;
+const CheckoutDetails = require('../models/dbModels').CheckoutDetails;
 
 const addToCart = async (req,res) =>{
     try {
@@ -81,20 +82,73 @@ const getShopingCart = async (req,res) =>{
     }
 }
 
-const removePizzaFromCart = async (req,res) =>{
+const removePizzaFromCart = async (req, res) => {
     try {
-        const {userId,pizzaId} = req.body;
-        // Check if user with given pizzaId exists
-        const cartItem = await CartItem.findOne({ userId, pizzaId });
-        if (cartItem) {
-            await cartItem.deleteOne()
-            res.status(200).json({ message: 'Pizza removed from cart successfully' });
-        } else {
-            res.status(404).json({ error: 'Pizza not found in cart' });
+        const { userId, pizzaIds } = req.body;
+        console.log("idss",pizzaIds)
+        // Check if pizzaIds is a valid array
+        if (!Array.isArray(pizzaIds) || pizzaIds.length === 0) {
+            return res.status(400).json({ error: 'Invalid pizzaIds array' });
         }
-    }catch (error) {
+
+        // Delete all cart items where userId matches and pizzaId is in the pizzaIds array
+        const result = await CartItem.deleteMany({ userId, pizzaId: { $in: pizzaIds } });
+
+        if (result.deletedCount > 0) {
+            res.status(200).json({ message: `${result.deletedCount} pizzas removed from cart successfully` });
+        } else {
+            res.status(404).json({ error: 'No pizzas found in cart for the given IDs' });
+        }
+    } catch (error) {
         console.error('Error removing pizza from cart:', error);
         res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+
+const checkoutDetails = async (req, res) => {
+    try {
+        const { userId, name, address, city, state, zip, phone } = req.body;
+        
+        const details = await CheckoutDetails.findOne({ userId });
+        
+        if (details) {
+            // If user with the given userId exists, update the details
+            details.name = name;
+            details.address = address;
+            details.city = city;
+            details.state = state;
+            details.zip = zip;
+            details.phone = phone;
+            
+            await details.save();
+            return res.status(200).json({ message: 'Delivery address details are updated' });
+        } else {
+            // If no details exist for the user, create a new record
+            const newCheckoutDetails = new CheckoutDetails({ userId, name, address, city, state, zip, phone });
+            await newCheckoutDetails.save();
+            return res.status(201).json({ message: 'Delivery address details are recorded' });
+        }
+    } catch (error) {
+        console.error('Error adding checkout details:', error);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+
+const getCheckoutDetails = async (req,res) =>{
+    try {
+        const {userId} = req.params;
+        // Check if user with given pizzaId exists
+        const checkoutDetails = await CheckoutDetails.findOne({ userId})
+        if (checkoutDetails) {
+            res.status(200).json({ checkoutDetails });
+        } else {
+            res.status(200).json({ checkoutDetails: null });
+        }
+    }catch (error) {
+        console.error('Error fetching checkout details:', error);
+        res.status(500).json({ error: 'Internal server error while getching the checkout details' });
     }
 }
 
@@ -102,5 +156,7 @@ module.exports ={
     addToCart,
     updateQuantityOfPizza,
     getShopingCart,
-    removePizzaFromCart
+    removePizzaFromCart,
+    checkoutDetails,
+    getCheckoutDetails
 };

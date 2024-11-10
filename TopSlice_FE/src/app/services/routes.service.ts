@@ -39,4 +39,12 @@ export class RoutesService {
   removeCartItem(cartData: any){
     return this.http.post(`${environment.gateway}/removeCartItem`,cartData);
   }
+
+  placeOrder(orderData: any){
+    return this.http.post(`${environment.gateway}/checkoutDetails`,orderData);
+  }
+
+  getOrders(userId: any){
+    return this.http.get(`${environment.gateway}/getCheckoutDetails/${userId}`);
+  }
 }
