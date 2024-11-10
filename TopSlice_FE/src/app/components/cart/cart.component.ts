@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartItem } from 'src/app/models/cartItem';
 import { AuthService } from 'src/app/services/auth.service';
+import { CartService } from 'src/app/services/cart.service';
 import { IngredientsService } from 'src/app/services/ingredients.service';
 import { RoutesService } from 'src/app/services/routes.service';
 
@@ -15,8 +16,15 @@ export class CartComponent {
 //for now we are using the ingrediants, in real we will use the api from BE to get the cart items
   userCartItems:CartItem[] = [];
   totalPrice:number = 0;
+  checkOutItems:CartItem[] = [];
+  isCartEmpty:boolean = false
 
-  constructor(private authService: AuthService,private routeService : RoutesService, private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private routeService : RoutesService,
+    private router: Router,
+    private cartService: CartService,
+  ) { }
 
   ngOnInit(): void {
     // const userId = this.authService.getUserId();
@@ -40,6 +48,9 @@ export class CartComponent {
           console.error('Error while fetching cart items:', err);
         }
       });
+      if (this.userCartItems.length > 0) {
+        this.isCartEmpty = false
+      }
     }else {
       console.log('User ID not found in localstorage');
     }
@@ -51,8 +62,12 @@ export class CartComponent {
 
       if (cartItem.selected) {
         this.totalPrice += cartItem.totalPizzaPrice;
+        cartItem.isSelected = true
+        this.checkOutItems.push(cartItem);
+        console.log("checkItem",this.checkOutItems)
       } else {
         this.totalPrice -= cartItem.totalPizzaPrice;
+        cartItem.isSelected = false;
       }
 
       
@@ -109,7 +124,8 @@ export class CartComponent {
   }
 
   deleteItem(userId:String,cardItem:CartItem) {
-    const pizzaId = cardItem.pizzaId;
+    let pizzaIds = []
+    pizzaIds.push(cardItem.pizzaId);
     // const pizzaPrice:number = cardItem.pizzaPrice;
     // const cartData = { userId, pizzaId };
     // this.routeService.removeCartItem(cartData).subscribe({  
@@ -120,12 +136,12 @@ export class CartComponent {
     //   }
     // });
     // console.log("delete item");
-    const cartData = { userId, pizzaId };
+    const cartData = { userId, pizzaIds };
     this.routeService.removeCartItem(cartData).subscribe({
       next: (data) => {
         console.log("item removed", data);
         // Remove the item from the local array
-        this.userCartItems = this.userCartItems.filter(item => item.pizzaId !== pizzaId);
+        this.userCartItems = this.userCartItems.filter(item => item.pizzaId !== cardItem.pizzaId);
         // Recalculate the total price
         this.calculateTotalPrice(cardItem.totalPizzaPrice);
       },
@@ -145,6 +161,9 @@ export class CartComponent {
     // this.routeService.getPizza().subscribe((data)=>{
     //   console.log(data);
     // });
+    this.cartService.setChekoutItem(this.checkOutItems);
+    const dataFromCartService = this.cartService.getCheckoutItems()
+    console.log("cartServiceData",dataFromCartService)
     this.router.navigate(['/checkout']);
   }
 

@@ -4,8 +4,8 @@
     <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
       <h3>Order Summary</h3>
       <ul>
-        <li *ngFor="let item of orderSummary.items">
-          {{ item.quantity }} x {{ item.name }} - ${{ item.price.toFixed(2) }}
+        <li *ngFor="let item of cartItems">
+          {{ item.pizzaQuantity }} x {{ item.pizzaName }} - ${{ item.pizzaPrice.toFixed(2) }}
         </li>
       </ul>
       <p>Subtotal: ${{ totalAmount - 3.00 - (totalAmount * 0.1) }}</p>

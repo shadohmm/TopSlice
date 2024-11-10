@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Route, Router } from '@angular/router';
+import { CartItem } from 'src/app/models/cartItem';
 import { AddressDetails } from 'src/app/models/user';
+import { CartService } from 'src/app/services/cart.service';
 import { RoutesService } from 'src/app/services/routes.service';
 
 @Component({
@@ -10,15 +13,17 @@ import { RoutesService } from 'src/app/services/routes.service';
 })
 export class CheckoutComponent {
   checkoutForm: FormGroup;
+  cartItems: CartItem[] = []
   userId = localStorage.getItem('userId');
-  orderSummary = {
-    items: [
-      { name: 'Margherita Pizza', quantity: 1, price: 12.00 },
-      { name: 'Garlic Bread', quantity: 1, price: 5.00 }
-    ]
-  };
+  pizzaIds:String[] = []
+  // orderSummary = {
+  //   items: [
+  //     { name: 'Margherita Pizza', quantity: 1, price: 12.00 },
+  //     { name: 'Garlic Bread', quantity: 1, price: 5.00 }
+  //   ]
+  // };
 
-  constructor(private fb: FormBuilder, private routesService: RoutesService) {
+  constructor(private fb: FormBuilder, private routesService: RoutesService, private cartService: CartService, private router: Router) {
     this.checkoutForm = this.fb.group({
       name: ['', Validators.required],
       address: ['', Validators.required],
@@ -34,6 +39,10 @@ export class CheckoutComponent {
   }
 
   ngOnInit(): void {
+    this.cartItems = this.cartService.getCheckoutItems()
+    this.pizzaIds = this.cartItems.map(item => item.pizzaId)
+    console.log("cartItemCheckout",this.cartItems)
+    console.log("pizzaids", this.pizzaIds)
     this.routesService.getOrders(this.userId)
     .subscribe({
       next: (data: any) => {
@@ -79,8 +88,17 @@ export class CheckoutComponent {
 
       this.routesService.placeOrder(checkoutAddressDetails).subscribe({
         next: (data) => {
+          let userId = this.userId
+          let pizzaIds = this.pizzaIds
+          const cartData = { userId, pizzaIds };
           console.log('Order placed:', data);
+          this.routesService.removeCartItem(cartData).subscribe({
+            next:(data)=>{
+              console.log(data)
+            }
+          })
           alert('Order placed successfully!');
+          this.router.navigate(['/home']);
         },
         error: (err) => {
           console.error('Error placing order:', err);
@@ -92,7 +110,7 @@ export class CheckoutComponent {
     }
   }
   get totalAmount() {
-    const subtotal = this.orderSummary.items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    const subtotal = this.cartItems.reduce((acc, item) => acc + item.pizzaPrice * item.pizzaQuantity, 0);
     const deliveryFee = 3.00;
     const tax = subtotal * 0.1; // 10% tax
     return subtotal + deliveryFee + tax;
