@@ -84,3 +84,69 @@
       visibility: hidden;
     }
   }
+
+/* Navbar link styles */
+.nav-item .nav-link {
+  font-size: 1.5rem; /* Adjust font size as needed */
+  padding: 10px 15px; /* Optional: adjust padding for spacing */
+}
+
+/* Icon sizes for .bi-cart and .bi-box-arrow-right */
+.nav-item .bi-cart,
+.nav-item .bi-box-arrow-right {
+  width: 1.5rem;  /* Set icon width based on root font size */
+  height: 1.5rem; /* Set icon height based on root font size */
+}
+
+/* Navbar brand image */
+.navbar-brand img {
+  height: 50px;  /* Set the height of the logo */
+  width: auto;   /* Maintain aspect ratio */
+}
+
+/* Optional: To ensure icons scale better on smaller screens */
+@media (max-width: 768px) {
+  .nav-item .nav-link {
+    font-size: 1.25rem;  /* Smaller font size on smaller screens */
+    padding: 8px 12px;   /* Adjust padding for smaller screens */
+  }
+
+  .nav-item .bi-cart,
+  .nav-item .bi-box-arrow-right {
+    width: 1.5rem;  /* Slightly smaller icons on smaller screens */
+    height: 1.5rem; /* Slightly smaller icons on smaller screens */
+  }
+
+  .navbar-brand img {
+    height: 40px;  /* Smaller logo on smaller screens */
+  }
+}
+
+/* Tooltip container */
+.nav-item .nav-link {
+  position: relative; /* To position the tooltip relative to this container */
+}
+
+/* Tooltip text (initially hidden) */
+.nav-item .tooltip-text {
+  visibility: hidden;
+  opacity: 0;
+  width: auto; /* Adjust width as needed */
+  background-color: #eee; /* Tooltip background color */
+  color: #000; /* Tooltip text color */
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  top: 100%; /* Position the tooltip below the icon */
+  left: 50%;
+  margin-left: -40px; /* Center the tooltip */
+  transition: opacity 0.3s, visibility 0.3s; /* Smooth transition */
+}
+
+/* Show tooltip on hover over the nav link (including icon) */
+.nav-item .nav-link:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
